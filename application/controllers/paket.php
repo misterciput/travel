@@ -29,6 +29,7 @@ class Paket extends CI_Controller {
 		if($this->session->userdata('status')){
 			$data['title'] = 'Tambah paket';
 			$data['view'] = 'form_paket';
+			$data['option_group'] = $this->paket->get_menu_group();
 
 			$this->load->view('template', $data);
 		}else{
@@ -43,15 +44,18 @@ class Paket extends CI_Controller {
 		if($this->session->userdata('status')){
 			$result = $this->paket->get_paket_by_id($id);
 			$data['id'] = $id;
-			$data['judul'] = $result->judul;
-			$data['kategori'] = $result->kategori;
-			$data['isi'] = $result->isi;
-			$data['headline'] = $result->headline;
-			$data['show'] = $result->show;
-			$data['tanggal'] = $result->tanggal;
-			$data['img'] = $result->img;
+			$data['nama_paket'] = $result->nama_paket;
+			$data['menu_group'] = $result->menu_group;
+			$data['description'] = $result->description;
+			$data['package'] = $result->package;
+			$data['currency'] = $result->currency;
+			$data['price'] = $result->price;
+			$data['is_active'] = $result->is_active;
+			$data['person'] = $result->person;
 
-			$data['title'] = 'Edit paket';
+			$data['option_group'] = $this->paket->get_menu_group();
+
+			$data['title'] = 'Edit Paket';
 			$data['view'] = 'edit_paket';
 			$this->load->view('template', $data);
 		}else{
@@ -64,24 +68,16 @@ class Paket extends CI_Controller {
 			$data['message'] = null;
 			$data['url']=null;
 			if($this->session->userdata('status')){
-				$config['upload_path'] = './assets/img/';
-				$config['allowed_types'] = 'gif|jpg|png|jpeg';
-				$config['max_width']  = '0';
-				$config['max_height']  = '0';
-				$config['encrypt_name'] = TRUE;
-
-				$this->load->library('upload', $config);
-				$this->upload->do_upload('img');
-				$upload = $this->upload->data();
 				$data = array(
-					'judul' => $this->input->post('judul'),
-					'kategori' => $this->input->post('kategori'),
-					'isi' => $this->input->post('isi'),
-					'headline' => $this->input->post('headline') ? 1 : 0,
-					'show' => $this->input->post('show') ? 1 : 0,
-					'img' => $upload['file_name'],
-					'tanggal' => date('Y-m-d', strtotime($this->input->post('tanggal'))),
-					'recdate' => date('Y-m-d h:i:s')
+					'nama_paket' => $this->input->post('nama_paket'),
+					'menu_group' => $this->input->post('menu_group'),
+					'price' => $this->input->post('price'),
+					'person' => $this->input->post('person'),
+					'description' => $this->input->post('description'),
+					'package' => $this->input->post('package'),
+					'is_active' => $this->input->post('is_active') ? 1 : 0,
+					'currency' => $this->input->post('currency'),
+					'timestamp' => date('Y-m-d h:i:s')
 				);
 
 				$this->paket->insert_paket($data);

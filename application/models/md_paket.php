@@ -2,8 +2,11 @@
 class Md_paket extends CI_Model {
 
 	public function get_all_paket(){
+		$this->db->select('paket.*');
+		$this->db->select('menu_group.name group_name');
 		$this->db->from('paket');
-		$this->db->order_by('id', 'desc');
+		$this->db->order_by('paket.id', 'desc');
+		$this->db->join('menu_group', 'paket.menu_group=menu_group.code');
 		$result = $this->db->get();
 
 		return $result->result();
@@ -30,5 +33,10 @@ class Md_paket extends CI_Model {
 
 	public function delete_paket($id){
 		$this->db->delete('paket', array('id' => $id));
+	}
+
+	public function get_menu_group(){
+		$result = $this->db->get('menu_group')->result();
+		return $result;
 	}
 }

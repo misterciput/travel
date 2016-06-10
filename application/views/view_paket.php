@@ -16,8 +16,8 @@
 				<tr>
 					<td><?=$no?></td>
 					<td><?=$row->nama_paket?></td>
-					<td><?=$row->menu_group?></td>
-					<td><?=$row->price?></td>
+					<td><?=$row->group_name?></td>
+					<td><?=$row->currency?> <?=number_format($row->price,2)?></td>
 					<td>
 						<a class="waves-effect waves-light btn orange" href="<?=base_url()?>paket/edit/<?=$row->id?>" type="submit">Edit</a>
 						<a class="waves-effect waves-light btn red" href="<?=base_url()?>paket/delete/<?=$row->id?>" type="submit">Delete</a>

@@ -1,7 +1,7 @@
-<form class="col s12" action="<?=base_url()?>paket/do_insert" method="post" enctype="multipart/form-data">
+<form class="col s12" action="<?=base_url()?>paket/do_edit" method="post" enctype="multipart/form-data">
   <div class="row">
     <div class="input-field col s12">
-      <input placeholder="Nama Paket" id="nama_paket" type="text" class="validate" name="nama_paket">
+      <input placeholder="Nama Paket" id="nama_paket" type="text" class="validate" name="nama_paket" value="<?=$nama_paket?>">
       <label for="nama_paket">Nama Paket</label>
     </div>
   </div>
@@ -10,7 +10,7 @@
       <select name="menu_group" required>
         <option value="" disabled selected>Choose your option</option>
         <?php foreach($option_group as $group){?>
-          <option value="<?=$group->code?>"><?=$group->name?></option>
+          <option value="<?=$group->code?>" <?=$menu_group == $group->code ? 'selected' : ''?>><?=$group->name?></option>
         <?php } ?>
       </select>
       <label>Kategori</label>
@@ -20,35 +20,35 @@
     <div class="input-field col s12">
       <select name="currency" required>
         <option value="" disabled selected>Choose your option</option>
-        <option value="IDR">IDR</option>
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
+        <option value="IDR" <?=$currency == 'IDR' ? 'selected' : '' ?>>IDR</option>
+        <option value="USD" <?=$currency == 'USD' ? 'selected' : '' ?>>USD</option>
+        <option value="EUR" <?=$currency == 'EUR' ? 'selected' : '' ?>>EUR</option>
       </select>
       <label>Currency</label>
     </div>
   </div>
   <div class="row">
     <div class="input-field col s12">
-      <input placeholder="Price" id="price" type="number" class="validate" name="price">
+      <input placeholder="Price" id="price" type="number" class="validate" name="price" value="<?=$price?>">
       <label for="price">Price</label>
     </div>
   </div>
   <div class="row">
     <div class="input-field col s12">
-      <input placeholder="Minimum Person" id="person" type="number" class="validate" name="person">
+      <input placeholder="Minimum Person" id="person" type="number" class="validate" name="person" value="<?=$person?>">
       <label for="person">Minimum Person</label>
     </div>
   </div>
   <div class="row">
     <div class="input-field col s12">
       <h5>Description</h5><br/>
-      <textarea id="description" name="description" class="materialize-textarea ckeditor"></textarea>
+      <textarea id="description" name="description" class="materialize-textarea ckeditor"><?=$description?></textarea>
     </div>
   </div><br/><br/>
   <div class="row">
     <div class="input-field col s12">
       <h5>Package Description</h5><br/>
-      <textarea id="package" name="package" class="materialize-textarea ckeditor"></textarea>
+      <textarea id="package" name="package" class="materialize-textarea ckeditor"><?=$package?></textarea>
     </div>
   </div><br/><br/>
   <!-- <div class="file-field input-field">
@@ -63,8 +63,8 @@
  --> 
  <div class="row">
     <p>
-      <input type="checkbox" id="is_active" name="is_active" />
-      <label for="is_active"><strong>Active</strong></label>
+      <input type="checkbox" id="is_active" name="is_active" <?=$is_active == 1 ? 'checked' : ''?> />
+      <label for="is_active" ><strong>Active</strong></label>
     </p>
  </div>
  <div class="row center">
@@ -73,7 +73,7 @@
 </form>
 
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-  <a class="btn-floating btn-large waves-effect waves-light orange" href="<?=base_url()?>artikel">
+  <a class="btn-floating btn-large waves-effect waves-light orange" href="<?=base_url()?>paket">
     <i class="large material-icons">navigate_before</i>
   </a>
 </div>
