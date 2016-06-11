@@ -6,6 +6,7 @@ class Paket extends CI_Controller {
 	function __construct() {
        parent::__construct();
        $this->load->model('md_paket', 'paket');
+       $this->load->model('md_itinerary', 'itinerary');
    }
 
 	public function index(){
@@ -27,7 +28,7 @@ class Paket extends CI_Controller {
 		$data['message'] = null;
 		$data['url']=null;
 		if($this->session->userdata('status')){
-			$data['title'] = 'Tambah paket';
+			$data['title'] = 'Tambah Paket';
 			$data['view'] = 'form_paket';
 			$data['option_group'] = $this->paket->get_menu_group();
 
@@ -37,10 +38,22 @@ class Paket extends CI_Controller {
 		}
 	}
 
-	public function edit($id){
+	public function insert_itinerary($id){
 		$data = array();
 		$data['message'] = null;
 		$data['url']=null;
+		if($this->session->userdata('status')){
+			$data['id'] = $id;
+			$data['title'] = 'Tambah Itinerary';
+			$data['view'] = 'form_itinerary';
+			$this->load->view('template', $data);
+		}else{
+			$this->load->view('view_login', $data);
+		}
+	}
+
+	public function edit($id, $data=FALSE){
+		$data = array();
 		if($this->session->userdata('status')){
 			$result = $this->paket->get_paket_by_id($id);
 			$data['id'] = $id;
@@ -52,8 +65,8 @@ class Paket extends CI_Controller {
 			$data['price'] = $result->price;
 			$data['is_active'] = $result->is_active;
 			$data['person'] = $result->person;
-
 			$data['option_group'] = $this->paket->get_menu_group();
+			$data['itinerary'] = $this->itinerary->get_itinerary_by_paket($id);
 
 			$data['title'] = 'Edit Paket';
 			$data['view'] = 'edit_paket';
@@ -91,35 +104,46 @@ class Paket extends CI_Controller {
 			}
 		}
 
+		public function do_insert_itinerary(){
+			$data = array();
+			if($this->session->userdata('status')){
+				$data = array(
+					'title' => $this->input->post('title'),
+					'sequence' => $this->input->post('sequence'),
+					'detail' => $this->input->post('detail'),
+					'id_paket' => $this->input->post('id_paket')
+				);
+
+				$this->itinerary->insert_itinerary($data);
+				$data['message'] = 'Itinerary baru telah ditambahkan';
+				$data['title'] = 'paket';
+				$data['view'] = 'view_paket';
+				$this->edit($data['id_paket'], $data);
+			}else{
+				$this->load->view('view_login', $data);
+			}
+		}
+
 		public function do_edit($id){
 			$data = array();
 			$data['message'] = null;
 			$data['url']=null;
 			if($this->session->userdata('status')){
-				$config['upload_path'] = './assets/img/';
-				$config['allowed_types'] = 'gif|jpg|png|jpeg';
-				$config['max_width']  = '0';
-				$config['max_height']  = '0';
-				$config['encrypt_name'] = TRUE;
-
-				$this->load->library('upload', $config);
-				$this->upload->do_upload('img');
-				$upload = $this->upload->data();
-				$current_paket = $this->paket->get_paket_by_id($id);
 				$data = array(
-					'judul' => $this->input->post('judul'),
-					'kategori' => $this->input->post('kategori'),
-					'isi' => $this->input->post('isi'),
-					'headline' => $this->input->post('headline') ? 1 : 0,
-					'show' => $this->input->post('show') ? 1 : 0,
-					'img' => $upload['file_name'],
-					'tanggal' => date('Y-m-d', strtotime($this->input->post('tanggal'))),
-					'recdate' => date('Y-m-d h:i:s')
+					'nama_paket' => $this->input->post('nama_paket'),
+					'menu_group' => $this->input->post('menu_group'),
+					'price' => $this->input->post('price'),
+					'person' => $this->input->post('person'),
+					'description' => $this->input->post('description'),
+					'package' => $this->input->post('package'),
+					'is_active' => $this->input->post('is_active') ? 1 : 0,
+					'currency' => $this->input->post('currency')
 				);
+
 				$this->paket->update_paket($id, $data);
-				$data['message'] = 'paket telah diubah';
+				$data['message'] = 'Paket telah diubah';
 				$data['paket'] = $this->paket->get_all_paket();
-				$data['title'] = 'paket';
+				$data['title'] = 'Paket';
 				$data['view'] = 'view_paket';
 				$this->load->view('template', $data);
 			}else{

@@ -73,7 +73,7 @@
 </form>
 
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-  <a class="btn-floating btn-large waves-effect waves-light orange" href="<?=base_url()?>artikel">
+  <a class="btn-floating btn-large waves-effect waves-light orange" href="<?=base_url()?>paket">
     <i class="large material-icons">navigate_before</i>
   </a>
 </div>

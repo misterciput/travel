@@ -5,7 +5,7 @@ class My_file extends CI_Controller {
 
 	function __construct() {
        parent::__construct();
-       $this->load->model('md_artikel', 'artikel');
+       $this->load->model('md_paket', 'paket');
    }
 
 	public function index(){
