@@ -76,6 +76,24 @@ class Paket extends CI_Controller {
 		}
 	}
 
+	public function edit_itinerary($id_paket, $id){
+		$data = array();
+		if($this->session->userdata('status')){
+			$result = $this->itinerary->get_itinerary_by_id($id);
+			$data['id_paket'] = $id_paket;
+			$data['id'] = $id;
+			$data['title_itinerary'] = $result->title;
+			$data['sequence'] = $result->sequence;
+			$data['detail'] = $result->detail;
+
+			$data['title'] = 'Edit Itinerary';
+			$data['view'] = 'edit_itinerary';
+			$this->load->view('template', $data);
+		}else{
+			$this->load->view('view_login', $data);
+		}
+	}
+
 		public function do_insert(){
 			$data = array();
 			$data['message'] = null;
@@ -150,6 +168,28 @@ class Paket extends CI_Controller {
 				$this->load->view('view_login', $data);
 			}
 		}
+
+		public function do_edit_itinerary(){
+			$data = array();
+			if($this->session->userdata('status')){
+				$id = $this->input->post('id');
+				$data = array(
+					'title' => $this->input->post('title'),
+					'sequence' => $this->input->post('sequence'),
+					'detail' => $this->input->post('detail')
+				);
+
+				$this->itinerary->update_itinerary($id, $data);
+				$data['id_paket'] = $this->input->post('id_paket');
+				$data['message'] = 'Itinerary telah diubah';
+				$data['title'] = 'Paket';
+				$data['view'] = 'view_paket';
+				$this->edit($data['id_paket'], $data);
+			}else{
+				$this->load->view('view_login', $data);
+			}
+		}
+
 	public function delete($id){
 		$this->paket->delete_paket($id);
 		$data['message'] = 'paket telah dihapus';
