@@ -1,7 +1,7 @@
 <form class="col s12" action="<?=base_url()?>paket/do_insert" method="post" enctype="multipart/form-data">
   <div class="row">
     <div class="input-field col s12">
-      <input placeholder="Nama Paket" id="nama_paket" type="text" class="validate" name="nama_paket">
+      <input placeholder="Nama Paket" id="nama_paket" type="text" class="validate" name="nama_paket" required>
       <label for="nama_paket">Nama Paket</label>
     </div>
   </div>
@@ -29,13 +29,13 @@
   </div>
   <div class="row">
     <div class="input-field col s12">
-      <input placeholder="Price" id="price" type="number" class="validate" name="price">
+      <input placeholder="Price" id="price" type="number" class="validate" name="price" required>
       <label for="price">Price</label>
     </div>
   </div>
   <div class="row">
     <div class="input-field col s12">
-      <input placeholder="Minimum Person" id="person" type="number" class="validate" name="person">
+      <input placeholder="Minimum Person" id="person" type="number" class="validate" name="person" required>
       <label for="person">Minimum Person</label>
     </div>
   </div>

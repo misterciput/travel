@@ -4,7 +4,7 @@
   <div class="file-field input-field">
     <div class="btn">
       <span>Select Your Picture</span>
-      <input type="file" name="pict">
+      <input type="file" name="pict" required>
     </div>
     <div class="file-path-wrapper">
       <input class="file-path validate" type="text">
