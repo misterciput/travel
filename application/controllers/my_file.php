@@ -13,7 +13,7 @@ class My_file extends CI_Controller {
 		$data['message'] = null;
 		$data['url']=null;
 		if($this->session->userdata('status')){
-			$data['title'] = 'Artikel';
+			$data['title'] = 'My File';
 			$data['view'] = 'view_file';
 			$this->load->view('template', $data);
 		}else{

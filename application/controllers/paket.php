@@ -7,12 +7,10 @@ class Paket extends CI_Controller {
        parent::__construct();
        $this->load->model('md_paket', 'paket');
        $this->load->model('md_itinerary', 'itinerary');
+       $this->load->model('md_gallery', 'gallery');
    }
 
-	public function index(){
-		$data = array();
-		$data['message'] = null;
-		$data['url']=null;
+	public function index($data = FALSE){
 		if($this->session->userdata('status')){
 			$data['title'] = 'Paket';
 			$data['view'] = 'view_paket';
@@ -52,8 +50,21 @@ class Paket extends CI_Controller {
 		}
 	}
 
-	public function edit($id, $data=FALSE){
+	public function insert_gallery($id){
 		$data = array();
+		$data['message'] = null;
+		$data['url']=null;
+		if($this->session->userdata('status')){
+			$data['id'] = $id;
+			$data['title'] = 'Tambah Gallery';
+			$data['view'] = 'form_gallery';
+			$this->load->view('template', $data);
+		}else{
+			$this->load->view('view_login', $data);
+		}
+	}
+
+	public function edit($id, $data=FALSE){
 		if($this->session->userdata('status')){
 			$result = $this->paket->get_paket_by_id($id);
 			$data['id'] = $id;
@@ -67,7 +78,7 @@ class Paket extends CI_Controller {
 			$data['person'] = $result->person;
 			$data['option_group'] = $this->paket->get_menu_group();
 			$data['itinerary'] = $this->itinerary->get_itinerary_by_paket($id);
-
+			$data['gallery'] = $this->gallery->get_gallery_by_paket($id);
 			$data['title'] = 'Edit Paket';
 			$data['view'] = 'edit_paket';
 			$this->load->view('template', $data);
@@ -88,6 +99,21 @@ class Paket extends CI_Controller {
 
 			$data['title'] = 'Edit Itinerary';
 			$data['view'] = 'edit_itinerary';
+			$this->load->view('template', $data);
+		}else{
+			$this->load->view('view_login', $data);
+		}
+	}
+
+	public function edit_gallery($id_paket, $id){
+		$data = array();
+		if($this->session->userdata('status')){
+			$result = $this->gallery->get_gallery_by_id($id);
+			$data['id_paket'] = $id_paket;
+			$data['id'] = $id;
+			$data['pict'] = $result->pict;
+			$data['title'] = 'Edit gallery';
+			$data['view'] = 'edit_gallery';
 			$this->load->view('template', $data);
 		}else{
 			$this->load->view('view_login', $data);
@@ -142,6 +168,35 @@ class Paket extends CI_Controller {
 			}
 		}
 
+		public function do_insert_gallery(){
+			$data = array();
+			$data['message'] = null;
+			$data['url']=null;
+			if($this->session->userdata('status')){
+				$config['upload_path'] = './assets/img/';
+				$config['allowed_types'] = 'gif|jpg|png|jpeg';
+				$config['max_width']  = '0';
+				$config['max_height']  = '0';
+				$config['encrypt_name'] = TRUE;
+
+				$this->load->library('upload', $config);
+				$this->upload->do_upload('pict');
+				$upload = $this->upload->data();
+				$data = array(
+					'id_paket' => $this->input->post('id_paket'),
+					'pict' => $upload['file_name']
+				);
+
+				$this->gallery->insert_gallery($data);
+				unset($data['pict']);
+				$data['message'] = 'Foto gallery baru telah ditambahkan';
+				$data['title'] = 'Gallery';
+				$this->edit($data['id_paket'], $data);
+			}else{
+				$this->load->view('view_login', $data);
+			}
+		}
+
 		public function do_edit($id){
 			$data = array();
 			$data['message'] = null;
@@ -190,6 +245,40 @@ class Paket extends CI_Controller {
 			}
 		}
 
+		public function do_edit_gallery(){
+			$data = array();
+			$data['message'] = null;
+			$data['url']=null;
+			if($this->session->userdata('status')){
+				$current_pict = $this->gallery->get_gallery_by_id($this->input->post('id'))->pict;
+				if(file_exists('./assets/img/'.$current_pict)){
+					unlink('./assets/img/'.$current_pict);
+				}
+				$config['upload_path'] = './assets/img/';
+				$config['allowed_types'] = 'gif|jpg|png|jpeg';
+				$config['max_width']  = '0';
+				$config['max_height']  = '0';
+				$config['encrypt_name'] = TRUE;
+
+				$this->load->library('upload', $config);
+				$this->upload->do_upload('pict');
+				$upload = $this->upload->data();
+				$id = $this->input->post('id');
+				$data = array(
+					'pict' => $upload['file_name']
+				);
+
+				$this->gallery->update_gallery($id, $data);
+				unset($data['pict']);
+				$data['id_paket'] = $this->input->post('id_paket');
+				$data['message'] = 'Foto gallery telah diubah';
+				$data['title'] = 'Gallery';
+				$this->edit($data['id_paket'], $data);
+			}else{
+				$this->load->view('view_login', $data);
+			}
+		}
+
 	public function delete($id){
 		$this->paket->delete_paket($id);
 		$data['message'] = 'paket telah dihapus';
@@ -197,5 +286,25 @@ class Paket extends CI_Controller {
 		$data['title'] = 'paket';
 		$data['view'] = 'view_paket';
 		$this->load->view('template', $data);
+	}
+
+	public function delete_itinerary($id_paket, $id){
+		$this->itinerary->delete_itinerary($id);
+		$data['message'] = 'Itinerary telah dihapus';
+		$data['title'] = 'paket';
+		$data['view'] = 'view_paket';
+		$this->edit($id_paket, $data);
+	}
+
+	public function delete_gallery($id_paket, $id){
+		$current_pict = $this->gallery->get_gallery_by_id($id)->pict;
+		if(file_exists('./assets/img/'.$current_pict)){
+			unlink('./assets/img/'.$current_pict);
+		}
+		$this->gallery->delete_gallery($id);
+		$data['message'] = 'Foto gallery telah dihapus';
+		$data['title'] = 'paket';
+		$data['view'] = 'view_paket';
+		$this->edit($id_paket, $data);
 	}
 }

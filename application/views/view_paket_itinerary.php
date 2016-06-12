@@ -13,7 +13,7 @@
 				<td><?=$itr->title?></td>
 				<td>
 					<a class="waves-effect waves-light btn orange" href="<?=base_url()?>paket/edit_itinerary/<?=$id?>/<?=$itr->id?>">Edit</a>
-					<a class="waves-effect waves-light btn red" href="<?=base_url()?>paket/delete_itinerary/<?=$itr->id?>">Delete</a>
+					<a class="waves-effect waves-light btn red" href="<?=base_url()?>paket/delete_itinerary/<?=$id?>/<?=$itr->id?>">Delete</a>
 				</td>
 			</tr>
 		<?php }?>
