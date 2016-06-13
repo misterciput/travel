@@ -20,7 +20,7 @@
   </head>
   <body>
     <header>
-      <div class="container"><a href="http://materializecss.com/waves.html#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
+      <div class="container"><a href="" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons">menu</i></a></div>
       <ul id="nav-mobile" class="side-nav fixed" style="transform: translateX(0%);">
         <li class="logo"><a id="logo-container" class="brand-logo">
             <object  type="image/svg+xml" data="<?=base_url()?>assets/img/logo.svg"
@@ -61,7 +61,7 @@
       <div class="footer-copyright">
         <div class="container">
         © 2016, All rights reserved.
-        <a class="grey-text text-lighten-4 right" href="https://github.com/Dogfalo/materialize/blob/master/LICENSE">XYZ</a>
+        <a class="grey-text text-lighten-4 right" href="">XYZ</a>
         </div>
       </div>
     </footer>
@@ -70,18 +70,6 @@
 
     <!-- Google Plus Button-->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-
-    <!--  Google Analytics  -->
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-56218128-1', 'auto');
-    ga('require', 'displayfeatures');
-    ga('send', 'pageview');
-    </script>
 
   </body>
 </html>
