@@ -4,6 +4,7 @@
         <li class="tab col s3"><a href="#general">GENERAL</a></li>
         <li class="tab col s3"><a href="#itinerary">ITINERARY</a></li>
         <li class="tab col s3"><a href="#gallery">GALLERY</a></li>
+        <li class="tab col s3"><a href="#item">ITEM</a></li>
       </ul>
     </div>
     <div id="general" class="col s12">
@@ -14,6 +15,9 @@
     </div>
     <div id="gallery" class="col s12">
         <?php $this->load->view('view_paket_gallery');?>
+    </div>
+    <div id="item" class="col s12">
+        <?php $this->load->view('view_paket_item');?>
     </div>
 </div>
 
