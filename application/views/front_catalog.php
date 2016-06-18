@@ -35,87 +35,39 @@
                 <div id="content" class="col-sm-12 col-md-8 col-lg-9">
                     <div class="content-holder content-sub-holder">
                         <div class="row db-3-col">
+                        <?php
+                            foreach ($catalog as $key => $cat) {
+                        ?>
                             <article class="col-sm-6 col-md-4 article has-hover-s3">
-                                    <div class="img-wrap">
-                                        <a href="#">
-                                            <img src="<?php echo base_url();?>assets/img/listing/img-01.jpg" height="215" width="370" alt="image description">
-                                        </a>
-                                        <div class="img-caption text-uppercase">Discover Timeless</div>
-                                        <div class="hover-article">
-                                            <div class="star-rating">
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                            </div>
-                                            <div class="icons">
-                                                <a href="#"><span class="icon-heart"></span></a>
-                                                <a href="#"><span class="icon-reply"></span></a>
-                                            </div>
-                                            <div class="info-footer">
-                                                <span class="price">from <span>Rp. 10. 000. 000 .000</span></span>
-                                                <a href="#" class="link-more">Explore</a>
-                                            </div>
+                                <div class="img-wrap">
+                                    <a href="#">
+                                        <div id="pict" style="height: 215px; width: 370px; overflow: hidden; ">
+                                        <img src="<?php echo base_url();?>assets/img/<?=$cat->pict?>" height="215" width="370" alt="image description">
+                                        </div>
+                                    </a>
+                                    <div class="img-caption text-uppercase"><?=$cat->nama_paket?></div>
+                                    <div class="hover-article">
+                                        <div class="star-rating" style="margin-top: 30px;">
+                                            <span><span class="icon-star"></span></span>
+                                            <span><span class="icon-star"></span></span>
+                                            <span><span class="icon-star"></span></span>
+                                            <span><span class="icon-star"></span></span>
+                                            <span><span class="icon-star"></span></span>
+                                        </div>
+                                        <div class="icons">
+                                            <a href="#"><span class="icon-heart"></span></a>
+                                            <a href="#"><span class="icon-reply"></span></a>
+                                        </div>
+                                        <div class="info-footer">
+                                            <span class="price">from <span><?=$cat->currency?> <?=number_format($cat->price,2)?></span></span>
+                                            <a href="#" class="link-more">Explore</a>
                                         </div>
                                     </div>
-                                    <h3><a href="#">Jungle safari for families</a></h3>
-                                    <p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum,</p>
-                                </article>
-                                <article class="col-sm-6 col-md-4 article has-hover-s3">
-                                    <div class="img-wrap">
-                                        <a href="#">
-                                            <img src="<?php echo base_url();?>assets/img/listing/img-01.jpg" height="215" width="370" alt="image description">
-                                        </a>
-                                        <div class="img-caption text-uppercase">Discover Timeless</div>
-                                        <div class="hover-article">
-                                            <div class="star-rating">
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                            </div>
-                                            <div class="icons">
-                                                <a href="#"><span class="icon-heart"></span></a>
-                                                <a href="#"><span class="icon-reply"></span></a>
-                                            </div>
-                                            <div class="info-footer">
-                                                <span class="price">from <span>Rp. 10. 000. 000 .000</span></span>
-                                                <a href="#" class="link-more">Explore</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h3><a href="#">Jungle safari for families</a></h3>
-                                    <p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum,</p>
-                                </article>
-                                <article class="col-sm-6 col-md-4 article has-hover-s3">
-                                    <div class="img-wrap">
-                                        <a href="#">
-                                            <img src="<?php echo base_url();?>assets/img/listing/img-01.jpg" height="215" width="370" alt="image description">
-                                        </a>
-                                        <div class="img-caption text-uppercase">Discover Timeless</div>
-                                        <div class="hover-article">
-                                            <div class="star-rating">
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                                <span><span class="icon-star"></span></span>
-                                            </div>
-                                            <div class="icons">
-                                                <a href="#"><span class="icon-heart"></span></a>
-                                                <a href="#"><span class="icon-reply"></span></a>
-                                            </div>
-                                            <div class="info-footer">
-                                                <span class="price">from <span>Rp. 10. 000. 000 .000</span></span>
-                                                <a href="#" class="link-more">Explore</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <h3><a href="#">Jungle safari for families</a></h3>
-                                    <p>This is Photoshop's version of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum,</p>
-                                </article>
+                                </div>
+                                <h3><a href="#"><?=$cat->nama_paket?></a></h3>
+                                <?=$cat->description;?>
+                            </article>
+                        <?php } ?>  
                         </div>
                     </div>
                 </div>

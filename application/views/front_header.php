@@ -15,6 +15,9 @@
     <link media="all" rel="stylesheet" href="<?php echo base_url()?>assets/css/main.css">
 </head>
 <body>
+<?php
+    $this->load->model('md_paket', 'paket');
+?>
 	<div id="wrapper">
 		<header id="header" class="default-white-header header-v2">
 			<div class="container-fluid">
@@ -35,61 +38,31 @@
                     </div>
                     <div class="collapse navbar-collapse" id="nav">
                         <ul class="nav navbar-nav nav-center">
+                            <li>
+                                <a href="<?=base_url()?>">Home</a>
+                            </li>
                             <li class="dropdown has-mega-dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Indonesia <b class="icon-angle-down"></b></a>
                                 <div class="dropdown-menu">
                                     <div class="drop-wrap">
                                         <div class="five-col">
+                                        <?php 
+                                            $provinsi = $this->paket->get_provinsi(TRUE);
+                                            foreach ($provinsi as $i => $prov) {
+                                            
+                                        ?>
                                             <div class="column">
-                                                <strong class="title sub-link-opener">Jawa</strong>
+                                                <strong class="title sub-link-opener"><?=$prov->nama?></strong>
                                                 <ul class="header-link">
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="error.html">404 Error</a></li>
-                                                    <li><a href="tour-detail.html">Tour Detail</a></li>
-                                                    <li><a href="megamenu.html">Megamenu</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
+                                                    <?php
+                                                        $kota = $this->paket->get_kota($prov->id, TRUE);
+                                                        foreach ($kota as $j => $kot) {
+                                                    ?>
+                                                    <li><a href="<?=base_url()?>front_catalog/index/IDN/<?=$kot->id?>"><?=$kot->nama?></a></li>
+                                                    <?php } ?>
                                                 </ul>
                                             </div>
-                                            <div class="column">
-                                                <strong class="title sub-link-opener">Jawa</strong>
-                                                <ul class="header-link">
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="error.html">404 Error</a></li>
-                                                    <li><a href="tour-detail.html">Tour Detail</a></li>
-                                                    <li><a href="megamenu.html">Megamenu</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="column">
-                                                <strong class="title sub-link-opener">Jawa</strong>
-                                                <ul class="header-link">
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="error.html">404 Error</a></li>
-                                                    <li><a href="tour-detail.html">Tour Detail</a></li>
-                                                    <li><a href="megamenu.html">Megamenu</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="column">
-                                                <strong class="title sub-link-opener">Jawa</strong>
-                                                <ul class="header-link">
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="error.html">404 Error</a></li>
-                                                    <li><a href="tour-detail.html">Tour Detail</a></li>
-                                                    <li><a href="megamenu.html">Megamenu</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
-                                                </ul>
-                                            </div>
-                                            <div class="column">
-                                                <strong class="title sub-link-opener">Jawa</strong>
-                                                <ul class="header-link">
-                                                    <li><a href="about.html">About Us</a></li>
-                                                    <li><a href="error.html">404 Error</a></li>
-                                                    <li><a href="tour-detail.html">Tour Detail</a></li>
-                                                    <li><a href="megamenu.html">Megamenu</a></li>
-                                                    <li><a href="contact.html">Contact</a></li>
-                                                </ul>
-                                            </div>
+                                        <?php } ?>
                                         </div>
                                     </div>
                                 </div>
@@ -98,19 +71,12 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">International<b class="icon-angle-down"></b></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="blog-default.html">Australia</a></li>
-                                        <li><a href="blog-default.html">Bhutan</a></li>
-                                        <li><a href="blog-default.html">China</a></li>
-                                        <li><a href="blog-default.html">Eropa Barat</a></li>
-                                        <li><a href="blog-default.html">Eropa Timur</a></li>
-                                        <li><a href="blog-default.html">India</a></li>
-                                        <li><a href="blog-default.html">Shenzen Macau Hongkong</a></li>
-                                        <li><a href="blog-default.html">Jepang</a></li>
-                                        <li><a href="blog-default.html">Korea</a></li>
-                                        <li><a href="blog-default.html">Kuala Lumpur</a></li>
-                                        <li><a href="blog-default.html">Singapura</a></li>
-                                        <li><a href="blog-default.html">Thailand</a></li>
-                                        <li><a href="blog-default.html">Vietnam</a></li>
+                                        <?php
+                                            $international = $this->paket->get_international(TRUE);
+                                            foreach ($international as $k => $itr) {
+                                        ?>
+                                        <li><a href="<?=base_url()?>front_catalog/index/INT/<?=$itr->id?>"><?=$itr->nama?></a></li>
+                                        <?php } ?>
                                     </ul>
                                 </div>
                             </li>
@@ -118,9 +84,12 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Umroh & Haji<b class="icon-angle-down"></b></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="blog-default.html">Umroh</a></li>
-                                        <li><a href="blog-default.html">Haji</a></li>
-                                        <li><a href="blog-default.html">Holy Land</a></li>
+                                        <?php
+                                            $umrohaji = $this->paket->get_umroh_haji();
+                                            foreach ($umrohaji as $l => $umh) {
+                                        ?>
+                                        <li><a href="<?=base_url()?>front_catalog/index/UMH/<?=$umh->id?>"><?=$umh->nama?></a></li>
+                                        <?php } ?>
                                     </ul>
                                 </div>
                             </li>
@@ -128,12 +97,12 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Special Trip<b class="icon-angle-down"></b></a>
                                 <div class="dropdown-menu">
                                     <ul>
-                                        <li><a href="blog-default.html">Diving</a></li>
-                                        <li><a href="blog-default.html">Adventures</a></li>
-                                        <li><a href="blog-default.html">Cruise</a></li>
-                                        <li><a href="blog-default.html">Honeymoon</a></li>
-                                        <li><a href="blog-default.html">Pilgrimage</a></li>
-                                        <li><a href="blog-default.html">Sailings</a></li>
+                                        <?php
+                                            $special_trip = $this->paket->get_special_trip();
+                                            foreach ($special_trip as $m => $spt) {
+                                        ?>
+                                        <li><a href="<?=base_url()?>front_catalog/index/SPT/<?=$spt->id?>"><?=$spt->nama?></a></li>
+                                        <?php } ?>
                                     </ul>
                                 </div>
                             </li>

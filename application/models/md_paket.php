@@ -40,19 +40,38 @@ class Md_paket extends CI_Model {
 		return $result;
 	}
 
-	public function get_provinsi(){
+	public function get_provinsi($front = FALSE){
 		$this->db->select('id_provinsi id');
 		$this->db->select('nama nama');
 		$this->db->from('provinsi');
+		if($front){
+			$this->db->where('active', 1);
+		}
 		$result = $this->db->get()->result();
 
 		return $result;
 	}
 
-	public function get_international(){
+	public function get_kota($id_provinsi, $front = FALSE){
+		$this->db->select('id_kota id');
+		$this->db->select('nama nama');
+		$this->db->from('kota');
+		if($front){
+			$this->db->where('active', 1);
+			$this->db->where('id_provinsi', $id_provinsi);
+		}
+		$result = $this->db->get()->result();
+
+		return $result;
+	}
+
+	public function get_international($front = FALSE){
 		$this->db->select('country_code id');
 		$this->db->select('country_name nama');
 		$this->db->from('country');
+		if($front){
+			$this->db->where('active', 1);
+		}
 		$result = $this->db->get()->result();
 
 		return $result;
@@ -73,6 +92,29 @@ class Md_paket extends CI_Model {
 		$this->db->select('nama_other nama');
 		$this->db->from('other');
 		$this->db->where('code', 'SPT');
+		$result = $this->db->get()->result();
+
+		return $result;
+	}
+
+	public function get_catalog($menu_group = FALSE, $country_province = FALSE){
+		$this->db->from('paket p');
+		$this->db->join('gallery g', 'g.id_paket = p.id');
+		if($menu_group){
+			$this->db->where('menu_group', $menu_group);
+		}
+
+		if($country_province){
+			$this->db->where('country_province', $country_province);
+		}
+
+		$this->db->order_by('timestamp', 'desc');
+		$this->db->group_by('p.id');
+
+		if(!$menu_group AND !$country_province){
+			$this->db->limit(3);
+		}
+
 		$result = $this->db->get()->result();
 
 		return $result;

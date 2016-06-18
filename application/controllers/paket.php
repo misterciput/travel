@@ -9,7 +9,7 @@ class Paket extends CI_Controller {
        $this->load->model('md_itinerary', 'itinerary');
        $this->load->model('md_gallery', 'gallery');
        $this->load->model('md_item', 'item');
-   }
+    }
 
 	public function index($data = FALSE){
 		if($this->session->userdata('status')){
