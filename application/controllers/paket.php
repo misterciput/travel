@@ -387,4 +387,16 @@ class Paket extends CI_Controller {
 		$data['view'] = 'view_paket';
 		$this->edit($id_paket, $data);
 	}
+
+	public function get_first_sub($menu_group){
+		if($menu_group == 'IDN'){
+			$result = $this->paket->get_provinsi();
+		}elseif($menu_group == 'INT'){
+			$result = $this->paket->get_international();
+		}else{
+			$result = $this->paket->get_other();
+		}
+
+		echo json_encode($result);		
+	}
 }

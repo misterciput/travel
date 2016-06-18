@@ -7,11 +7,13 @@
   </div>
   <div class="row">
     <div class="input-field col s12">
-      <select name="menu_group" required>
+      <select name="menu_group" id="menu_group" onchange="setFirstSub()" required>
         <option value="" disabled selected>Choose your option</option>
         <?php foreach($option_group as $group){?>
           <option value="<?=$group->code?>"><?=$group->name?></option>
         <?php } ?>
+      </select>
+      <select name="first_sub" onchange="setSecondSub()" id="first_sub" required>     
       </select>
       <label>Kategori</label>
     </div>
@@ -77,3 +79,21 @@
     <i class="large material-icons">navigate_before</i>
   </a>
 </div>
+
+<script type="text/javascript">
+  function setFirstSub(){
+    var menu_group = $('#menu_group').val();
+    $('#first_sub').material_select();
+    $.get("<?=base_url()?>paket/get_first_sub/"+menu_group, function(data) {
+        var json = $.parseJSON(data);
+        $(json).each(function(index, item) {
+            $('#first_sub').append($('<option>', {
+                value: item.id,
+                text: item.name
+            }));
+        });
+    });
+
+    $('#first_sub').material_select('update');
+  }
+</script>>

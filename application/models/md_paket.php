@@ -39,4 +39,31 @@ class Md_paket extends CI_Model {
 		$result = $this->db->get('menu_group')->result();
 		return $result;
 	}
+
+	public function get_provinsi(){
+		$this->db->select('id_provinsi id');
+		$this->db->select('nama nama');
+		$this->db->from('provinsi');
+		$result = $this->db->get()->result();
+
+		return $result;
+	}
+
+	public function get_international(){
+		$this->db->select('country_code id');
+		$this->db->select('country_name nama');
+		$this->db->from('country');
+		$result = $this->db->get()->result();
+
+		return $result;
+	}
+
+	public function get_other(){
+		$this->db->select('id_other id');
+		$this->db->select('nama_other nama');
+		$this->db->from('other');
+		$result = $this->db->get()->result();
+
+		return $result;
+	}
 }
