@@ -85,6 +85,7 @@ class Paket extends CI_Controller {
 			$data['id'] = $id;
 			$data['nama_paket'] = $result->nama_paket;
 			$data['menu_group'] = $result->menu_group;
+			$data['country_province'] = $result->country_province;
 			$data['description'] = $result->description;
 			$data['package'] = $result->package;
 			$data['currency'] = $result->currency;
@@ -92,6 +93,7 @@ class Paket extends CI_Controller {
 			$data['is_active'] = $result->is_active;
 			$data['person'] = $result->person;
 			$data['option_group'] = $this->paket->get_menu_group();
+			$data['option_country_province'] = $this->get_first_sub($data['menu_group'], TRUE);
 			$data['itinerary'] = $this->itinerary->get_itinerary_by_paket($id);
 			$data['gallery'] = $this->gallery->get_gallery_by_paket($id);
 			$data['item'] = $this->item->get_item_by_paket($id);
@@ -161,6 +163,7 @@ class Paket extends CI_Controller {
 				$data = array(
 					'nama_paket' => $this->input->post('nama_paket'),
 					'menu_group' => $this->input->post('menu_group'),
+					'country_province' => $this->input->post('first_sub'),
 					'price' => $this->input->post('price'),
 					'person' => $this->input->post('person'),
 					'description' => $this->input->post('description'),
@@ -257,6 +260,7 @@ class Paket extends CI_Controller {
 				$data = array(
 					'nama_paket' => $this->input->post('nama_paket'),
 					'menu_group' => $this->input->post('menu_group'),
+					'country_province' => $this->input->post('first_sub'),
 					'price' => $this->input->post('price'),
 					'person' => $this->input->post('person'),
 					'description' => $this->input->post('description'),
@@ -388,15 +392,21 @@ class Paket extends CI_Controller {
 		$this->edit($id_paket, $data);
 	}
 
-	public function get_first_sub($menu_group){
+	public function get_first_sub($menu_group, $from_edit = FALSE){
 		if($menu_group == 'IDN'){
 			$result = $this->paket->get_provinsi();
 		}elseif($menu_group == 'INT'){
 			$result = $this->paket->get_international();
+		}elseif($menu_group == 'UMH'){
+			$result = $this->paket->get_umroh_haji();
 		}else{
-			$result = $this->paket->get_other();
+			$result = $this->paket->get_special_trip();
 		}
 
-		echo json_encode($result);		
+		if(!$from_edit){
+			echo json_encode($result);
+		}else{
+			return $result;
+		}		
 	}
 }

@@ -13,7 +13,7 @@
           <option value="<?=$group->code?>"><?=$group->name?></option>
         <?php } ?>
       </select>
-      <select name="first_sub" onchange="setSecondSub()" id="first_sub" required>     
+      <select name="first_sub" id="first_sub" required disabled>     
       </select>
       <label>Kategori</label>
     </div>
@@ -84,16 +84,18 @@
   function setFirstSub(){
     var menu_group = $('#menu_group').val();
     $('#first_sub').material_select();
+    $("#first_sub").empty().html(' ');
+    $("#first_sub").attr('disabled', false);
     $.get("<?=base_url()?>paket/get_first_sub/"+menu_group, function(data) {
         var json = $.parseJSON(data);
         $(json).each(function(index, item) {
-            $('#first_sub').append($('<option>', {
-                value: item.id,
-                text: item.name
-            }));
+            $("#first_sub").append(
+              $("<option></option>").attr("value",item.id).text(item.nama)
+            );  
         });
-    });
 
-    $('#first_sub').material_select('update');
+        $('#first_sub').material_select('update');
+        $("#first_sub").closest('.input-field').children('span.caret').remove();
+    });
   }
-</script>>
+</script>

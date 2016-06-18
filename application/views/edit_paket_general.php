@@ -7,11 +7,16 @@
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <select name="menu_group" required>
+          <select name="menu_group" id="menu_group" onchange="setFirstSub()" required>
             <option value="" disabled selected>Choose your option</option>
             <?php foreach($option_group as $group){?>
               <option value="<?=$group->code?>" <?=$menu_group == $group->code ? 'selected' : ''?>><?=$group->name?></option>
             <?php } ?>
+          </select>
+          <select name="first_sub" id="first_sub" required>
+            <?php foreach($option_country_province as $cp){?>
+              <option value="<?=$cp->id?>" <?=$country_province == $cp->id ? 'selected' : ''?>><?=$cp->nama?></option>
+            <?php } ?>   
           </select>
           <label>Kategori</label>
         </div>
@@ -71,3 +76,23 @@
         <button class="waves-effect waves-light btn" type="submit">OK</button> 
      </div>
 </form>
+
+<script type="text/javascript">
+  function setFirstSub(){
+    var menu_group = $('#menu_group').val();
+    $('#first_sub').material_select();
+    $("#first_sub").empty().html(' ');
+    $("#first_sub").attr('disabled', false);
+    $.get("<?=base_url()?>paket/get_first_sub/"+menu_group, function(data) {
+        var json = $.parseJSON(data);
+        $(json).each(function(index, item) {
+            $("#first_sub").append(
+              $("<option></option>").attr("value",item.id).text(item.nama)
+            );  
+        });
+
+        $('#first_sub').material_select('update');
+        $("#first_sub").closest('.input-field').children('span.caret').remove();
+    });
+  }
+</script>

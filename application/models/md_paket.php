@@ -58,10 +58,21 @@ class Md_paket extends CI_Model {
 		return $result;
 	}
 
-	public function get_other(){
+	public function get_umroh_haji(){
 		$this->db->select('id_other id');
 		$this->db->select('nama_other nama');
 		$this->db->from('other');
+		$this->db->where('code', 'UMH');
+		$result = $this->db->get()->result();
+
+		return $result;
+	}
+
+	public function get_special_trip(){
+		$this->db->select('id_other id');
+		$this->db->select('nama_other nama');
+		$this->db->from('other');
+		$this->db->where('code', 'SPT');
 		$result = $this->db->get()->result();
 
 		return $result;
