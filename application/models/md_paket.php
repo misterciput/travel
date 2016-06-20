@@ -13,13 +13,38 @@ class Md_paket extends CI_Model {
 	}
 
 	public function insert_paket($data){
-
 		$this->db->insert('paket', $data);
+		$id_paket = $this->db->insert_id();
+		$pricing = $this->input->post('pricing');
+		foreach ($pricing as $key => $value) {
+			$price = array(
+				'id_paket' => $id_paket,
+				'hotel' => $value['hotel'],
+				'pax_min' => $value['pax_min'],
+				'pax_max' => $value['pax_max'],
+				'price' => $value['price_pax']
+			);
+
+			$this->db->insert('harga_paket', $price);
+		}
+
 	}
 
 	public function update_paket($id, $data){
 		$this->db->where('id', $id);
 		$this->db->update('paket', $data);
+
+		$pricing = $this->input->post('pricing');
+		foreach ($pricing as $key => $value) {
+			$price = array(
+				'hotel' => $value['hotel'],
+				'pax_min' => $value['pax_min'],
+				'pax_max' => $value['pax_max'],
+				'price' => $value['price_pax']
+			);
+			$this->db->where('id_harga', $value['id_harga']);
+			$this->db->update('harga_paket', $price);
+		}
 	}
 
 	public function get_paket_by_id($id){
@@ -115,6 +140,14 @@ class Md_paket extends CI_Model {
 			$this->db->limit(3);
 		}
 
+		$result = $this->db->get()->result();
+
+		return $result;
+	}
+
+	public function get_harga_paket($id_paket){
+		$this->db->from('harga_paket');
+		$this->db->where('id_paket', $id_paket);
 		$result = $this->db->get()->result();
 
 		return $result;

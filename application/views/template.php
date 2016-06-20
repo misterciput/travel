@@ -28,7 +28,6 @@
         
         <li class="bold <?=$this->uri->segment(1) == 'artikel' ? 'active' : ''?>"><a href="<?=base_url()?>paket" class="waves-effect waves-teal">Paket</a>
         </li>
-        <li class="bold <?=$this->uri->segment(1) == 'my_file' ? 'active' : ''?>"><a href="<?=base_url()?>my_file" class="waves-effect waves-teal">My File</a></li>
         <li class="bold"><a href="<?=base_url()?>home/logout" class="waves-effect waves-teal">Logout</a></li>
       </ul>
     </header>

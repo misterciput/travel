@@ -97,6 +97,7 @@ class Paket extends CI_Controller {
 			$data['itinerary'] = $this->itinerary->get_itinerary_by_paket($id);
 			$data['gallery'] = $this->gallery->get_gallery_by_paket($id);
 			$data['item'] = $this->item->get_item_by_paket($id);
+			$data['harga_paket'] = $this->paket->get_harga_paket($id);
 			$data['title'] = 'Edit Paket';
 			$data['view'] = 'edit_paket';
 			$this->load->view('template', $data);
@@ -176,7 +177,7 @@ class Paket extends CI_Controller {
 				$this->paket->insert_paket($data);
 				$data['paket'] = $this->paket->get_all_paket();
 				$data['message'] = 'paket baru telah ditambahkan';
-				$data['title'] = 'paket';
+				$data['title'] = 'Paket';
 				$data['view'] = 'view_paket';
 				$this->load->view('template', $data);
 			}else{

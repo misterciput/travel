@@ -71,6 +71,32 @@
           <input type="checkbox" id="is_active" name="is_active" <?=$is_active == 1 ? 'checked' : ''?> />
           <label for="is_active" ><strong>Active</strong></label>
         </p>
+     </div><br/>
+     <div class="row">
+        <h5>Pricing Rules</h5>
+        <table>
+          <thead>
+            <tr>
+              <th width="5%">No</th>
+              <th width="15%">Hotel Name</th>
+              <th width="15%">Minimum Pax</th>
+              <th width="15%">Maximum Pax</th>
+              <th width="15%">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($harga_paket as $key => $val) {
+              $no = $key+1?>
+            <tr>
+              <td><?=$no?><input type="hidden" name="pricing[<?=$key?>][id_harga]" value="<?=$val->id_harga?>"></td>
+              <td><input type="text" name="pricing[<?=$key?>][hotel]" placeholder="Hotel Name" value="<?=$val->hotel?>"></td>
+              <td><input type="number" name="pricing[<?=$key?>][pax_min]" placeholder="Minimum Pax" value="<?=$val->pax_min?>"></td>
+              <td><input type="number" name="pricing[<?=$key?>][pax_max]" placeholder="Maximum Pax" value="<?=$val->pax_max?>"></td>
+              <td><input type="text" name="pricing[<?=$key?>][price_pax]" placeholder="Price" value="<?=$val->price?>"></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
      </div>
      <div class="row center">
         <button class="waves-effect waves-light btn" type="submit">OK</button> 

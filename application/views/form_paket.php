@@ -68,6 +68,32 @@
       <input type="checkbox" id="is_active" name="is_active" />
       <label for="is_active"><strong>Active</strong></label>
     </p>
+ </div><br/>
+ <div class="row">
+    <h5>Pricing Rules</h5>
+    <table>
+      <thead>
+        <tr>
+          <th width="5%">No</th>
+          <th width="15%">Hotel Name</th>
+          <th width="15%">Minimum Pax</th>
+          <th width="15%">Maximum Pax</th>
+          <th width="15%">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php for($i=0;$i<5;$i++){
+          $no = $i+1?>
+        <tr>
+          <td><?=$no?></td>
+          <td><input type="text" name="pricing[<?=$i?>][hotel]" placeholder="Hotel Name"></td>
+          <td><input type="number" name="pricing[<?=$i?>][pax_min]" placeholder="Minimum Pax"></td>
+          <td><input type="number" name="pricing[<?=$i?>][pax_max]" placeholder="Maximum Pax"></td>
+          <td><input type="text" name="pricing[<?=$i?>][price_pax]" placeholder="Price"></td>
+        </tr>
+        <?php } ?>
+      </tbody>
+    </table>
  </div>
  <div class="row center">
     <button class="waves-effect waves-light btn" type="submit">OK</button> 
