@@ -7,7 +7,7 @@
       <span class="card-title activator grey-text text-darken-4">
       	Login<i class="material-icons right">more_vert</i>
       </span><br/><br/><br/>
-      <form action="<?=base_url()?>home/login" method="post">
+      <form action="<?=base_url()?>/home/login" method="post">
       		<div class="row">
 		        <div class="input-field col s8">
 		          <input placeholder="Username" id="username" type="text" name="username" class="validate">

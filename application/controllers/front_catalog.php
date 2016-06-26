@@ -15,6 +15,7 @@ class Front_catalog extends CI_Controller {
 		$this->load->helper('url');
 		$data = array();
 		$data['catalog'] = $this->paket->get_catalog($menu_group, $country_province);
+		$data['CartItems'] = $this->cart->total_items();
 		$this->load->view('front_catalog', $data);
 	}
 }

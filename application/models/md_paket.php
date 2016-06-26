@@ -1,6 +1,10 @@
 <?php
 class Md_paket extends CI_Model {
-
+	
+	function __construct() {
+       parent::__construct();
+   }
+	
 	public function get_all_paket(){
 		$this->db->select('paket.*');
 		$this->db->select('menu_group.name group_name');
@@ -35,15 +39,23 @@ class Md_paket extends CI_Model {
 		$this->db->update('paket', $data);
 
 		$pricing = $this->input->post('pricing');
-		foreach ($pricing as $key => $value) {
-			$price = array(
-				'hotel' => $value['hotel'],
-				'pax_min' => $value['pax_min'],
-				'pax_max' => $value['pax_max'],
-				'price' => $value['price_pax']
-			);
-			$this->db->where('id_harga', $value['id_harga']);
-			$this->db->update('harga_paket', $price);
+		if($pricing){
+			foreach ($pricing as $key => $value) {
+				$price = array(
+					'hotel' => $value['hotel'],
+					'pax_min' => $value['pax_min'],
+					'pax_max' => $value['pax_max'],
+					'price' => $value['price_pax']
+				);
+
+				$price['id_paket'] = $this->input->post('id_paket');
+				if($value['id_harga']){
+					$this->db->where('id_harga', $value['id_harga']);
+					$this->db->update('harga_paket', $price);
+				}else{
+					$this->db->insert('harga_paket', $price);
+				}
+			}
 		}
 	}
 
@@ -60,7 +72,7 @@ class Md_paket extends CI_Model {
 		$this->db->delete('paket', array('id' => $id));
 	}
 
-	public function get_menu_group(){
+		public function get_menu_group(){
 		$result = $this->db->get('menu_group')->result();
 		return $result;
 	}
@@ -137,14 +149,36 @@ class Md_paket extends CI_Model {
 		$this->db->group_by('p.id');
 
 		if(!$menu_group AND !$country_province){
-			$this->db->limit(3);
+			$this->db->limit(10);
 		}
 
 		$result = $this->db->get()->result();
 
 		return $result;
 	}
+	
+	public function get_packages_thumbnail(){
+		$query = "select *, "
+				. "(select gallery.pict "
+				. "from gallery "
+				. "where gallery.id_paket = paket.id "
+				. "LIMIT 1) as pict "
+				. "from paket ";
+		
+		$result = $this->db->query($query)->result();
+		
+		return $result;
+	}
+	
+	public function get_harga_paket_by_id($id){
+		$this->db->from('harga_paket');
+		$this->db->where('id_Paket', $id);
+		$result = $this->db->get();
+		$result = $result->result();
 
+		return $result;
+	}
+	
 	public function get_harga_paket($id_paket){
 		$this->db->from('harga_paket');
 		$this->db->where('id_paket', $id_paket);
@@ -152,4 +186,5 @@ class Md_paket extends CI_Model {
 
 		return $result;
 	}
+	
 }

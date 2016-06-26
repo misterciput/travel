@@ -2,6 +2,7 @@
       <div class="row">
         <div class="input-field col s12">
           <input placeholder="Nama Paket" id="nama_paket" type="text" class="validate" name="nama_paket" value="<?=$nama_paket?>">
+          <input type="hidden" name="id_paket" value="<?=$id?>">
           <label for="nama_paket">Nama Paket</label>
         </div>
       </div>
@@ -85,14 +86,14 @@
             </tr>
           </thead>
           <tbody>
-            <?php foreach ($harga_paket as $key => $val) {
-              $no = $key+1?>
+            <?php for($i=0;$i<5;$i++) {
+              $no = $i+1?>
             <tr>
-              <td><?=$no?><input type="hidden" name="pricing[<?=$key?>][id_harga]" value="<?=$val->id_harga?>"></td>
-              <td><input type="text" name="pricing[<?=$key?>][hotel]" placeholder="Hotel Name" value="<?=$val->hotel?>"></td>
-              <td><input type="number" name="pricing[<?=$key?>][pax_min]" placeholder="Minimum Pax" value="<?=$val->pax_min?>"></td>
-              <td><input type="number" name="pricing[<?=$key?>][pax_max]" placeholder="Maximum Pax" value="<?=$val->pax_max?>"></td>
-              <td><input type="text" name="pricing[<?=$key?>][price_pax]" placeholder="Price" value="<?=$val->price?>"></td>
+              <td><?=$no?><input type="hidden" name="pricing[<?=$i?>][id_harga]" value="<?=isset($harga_paket[$i]->id_harga) ? $harga_paket[$i]->id_harga : ''?>"></td>
+              <td><input type="text" name="pricing[<?=$i?>][hotel]" placeholder="Hotel Name" value="<?=isset($harga_paket[$i]->hotel) ? $harga_paket[$i]->hotel : ''?>"></td>
+              <td><input type="number" name="pricing[<?=$i?>][pax_min]" placeholder="Minimum Pax" value="<?=isset($harga_paket[$i]->pax_min) ? $harga_paket[$i]->pax_min : ''?>"></td>
+              <td><input type="number" name="pricing[<?=$i?>][pax_max]" placeholder="Maximum Pax" value="<?=isset($harga_paket[$i]->pax_max) ? $harga_paket[$i]->pax_max : ''?>"></td>
+              <td><input type="text" name="pricing[<?=$i?>][price_pax]" placeholder="Price" value="<?=isset($harga_paket[$i]->price) ? $harga_paket[$i]->price : ''?>"></td>
             </tr>
             <?php } ?>
           </tbody>

@@ -1,5 +1,5 @@
 <?PHP
-	$this->load->view('front_header');
+	$this->load->view('front_header_v');
 ?>
 <main id="main" style="margin-top:7%">
     <div class="bg-gray content-with-sidebar grid-view-sidebar">
@@ -77,5 +77,5 @@
 </main>
 
 <?PHP
-	$this->load->view('front_footer');
+	$this->load->view('front_footer_v');
 ?>
